@@ -16,54 +16,54 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Metafi - Modern Next.js Template',
-    template: '%s | Metafi',
+    default: 'Gray Kuglen',
+    template: '%s | Gray Kuglen',
   },
   description:
-    'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
+    'Product designer building data-driven applications for real estate and financial services.',
   keywords: [
-    'Next.js',
-    'React',
-    'JavaScript',
-    'TypeScript',
-    'TailwindCSS',
-    'Template',
-    'Shadcn/UI',
-    'Web Development',
+    'Product Design',
+    'UX',
+    'Real Estate',
+    'Financial Services',
+    'Data-Driven',
+    'Gray Kuglen',
   ],
-  authors: [{ name: 'Metafi Team' }],
-  creator: 'Metafi Team',
-  publisher: 'Metafi',
+  authors: [{ name: 'Gray Kuglen' }],
+  creator: 'Gray Kuglen',
+  publisher: 'Gray Kuglen',
   robots: { index: true, follow: true },
+  manifest: '/favicon/site.webmanifest',
   icons: {
     icon: [
-      { url: '/images/layout/favicon.ico', sizes: '48x48' },
-      { url: '/images/layout/favicon.svg', type: 'image/svg+xml' },
-      { url: '/images/layout/favicon.ico' },
+      { url: '/favicon/favicon.ico', sizes: '48x48' },
+      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
-    shortcut: [{ url: '/images/layout/favicon.ico' }],
+    shortcut: [{ url: '/favicon/favicon.ico' }],
+    apple: [{ url: '/favicon/apple-touch-icon.png' }],
   },
   openGraph: {
-    title: 'Metafi - Modern Next.js Template',
+    title: 'Gray Kuglen',
     description:
-      'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
-    siteName: 'Metafi',
+      'Product designer building data-driven applications for real estate and financial services.',
+    siteName: 'Gray Kuglen',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Metafi - Modern Next.js Template',
+        alt: 'Gray Kuglen',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Metafi - Modern Next.js Template',
+    title: 'Gray Kuglen',
     description:
-      'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
+      'Product designer building data-driven applications for real estate and financial services.',
     images: ['/og-image.jpg'],
-    creator: '@metafi',
+    creator: '@graykuglen',
   },
 };
 
