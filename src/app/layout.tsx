@@ -3,7 +3,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import Banner from '@/components/layout/banner';
 import { Footer } from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -86,7 +85,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Banner url="https://www.shadcnblocks.com/template/metafi" />
           <Navbar />
           <main>{children}</main>
           <Footer />
