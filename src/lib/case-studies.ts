@@ -207,7 +207,7 @@ export const CASE_STUDIES: CaseStudy[] = [
           {
             label: 'Grade the Market',
             description:
-              'We sampled and scored 900+ Oakland rental listings, assigning each apartment a grade from D to A based on four dimensions: Location, Amenities, Quality, and Size.',
+              'We sampled and scored 900+ Metro City Area rental listings, assigning each apartment a grade from D to A based on four dimensions: Location, Amenities, Quality, and Size.',
           },
           {
             label: 'Model Rental Value',
