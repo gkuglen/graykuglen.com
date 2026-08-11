@@ -1171,7 +1171,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         heading: 'Try the Calculator',
         intro:
           'A working version of the partnership deal calculator — model construction financing, a seller-financed note back to the homeowner, and a traditional-build vs. prefab comparison, across the Property, Development, Summary, and Ownership Op tabs.',
-        src: '/apps/prop-dev/app/index.html',
+        src: '/apps/prop-dev/app',
         height: 1000,
       },
       {
