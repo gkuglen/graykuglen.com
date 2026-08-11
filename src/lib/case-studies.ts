@@ -4,6 +4,9 @@ export type ContentSection =
       heading: string;
       paragraphs?: string[];
       bullets?: string[];
+      outro?: string;
+      resultsLabel?: string;
+      results?: { value: string; label: string }[];
     }
   | {
       type: 'numbered';
@@ -21,6 +24,7 @@ export type ContentSection =
       intro?: string;
       bullets?: string[];
       chain?: string[];
+      chainLabel?: string;
       layers?: { label: string; description: string }[];
       outro?: string;
     }
@@ -34,6 +38,30 @@ export type ContentSection =
       heading: string;
       embedUrl: string;
       aspectRatio?: string;
+    }
+  | {
+      type: 'embed';
+      heading: string;
+      intro?: string;
+      src: string;
+      height?: number;
+    }
+  | {
+      type: 'image';
+      heading: string;
+      intro?: string;
+      src: string;
+      alt?: string;
+      mobile?: boolean;
+    }
+  | {
+      type: 'table';
+      heading: string;
+      intro?: string;
+      caption?: string;
+      columns: string[];
+      rows: string[][];
+      outro?: string;
     };
 
 export type CaseStudy = {
@@ -41,37 +69,35 @@ export type CaseStudy = {
   company: string;
   eyebrow: string;
   title: string;
+  subtitle?: string;
   tagline?: string;
   meta?: string;
   role?: string;
   description: string;
   metaBelow?: boolean;
-  heroImage: string;
+  heroImage?: string;
   stats: { label: string; value: string }[];
   images: { src: string; caption?: string }[];
   sections?: ContentSection[];
+  liveUrl?: string;
+  liveLabel?: string;
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'get-real-ready',
-    company: 'Get Real Ready',
-    eyebrow: 'Get Real Ready',
+    company: 'Get Rent Ready',
+    eyebrow: 'Get Rent Ready',
     title:
-      'Machine Learning for Real Estate: Increasing Cash Flow and Asset Value',
+      'Get Rent Ready: Using Market Data to Increase Rental Income and Property Value',
     tagline: 'Real Estate Analytics Platform',
     meta: 'Responsive Web App · 2025',
     role: 'Product Design · Research · Strategy',
     description:
       'Data-driven valuation models increased cash flow by 16% on a single unit while driving a 5–6% lift in asset value. Scaled across a portfolio, this approach delivered a 46% increase in cash flow and reduced expenses by 4–5% since 2023.',
     metaBelow: true,
-    heroImage: '/images/portfolio/grr_mobile2.png',
-    stats: [
-      { label: 'Cash flow increase (single unit)', value: '16%' },
-      { label: 'Asset value lift', value: '5–6%' },
-      { label: 'Portfolio cash flow increase', value: '46%' },
-      { label: 'Expense reduction', value: '4–5%' },
-    ],
+    heroImage: '/apps/getrenteady/updated_getrentready.png',
+    stats: [],
     images: [
       { src: '/images/portfolio/grr_phase1.png', caption: 'Phase 1' },
       { src: '/images/portfolio/grr_phase2.png', caption: 'Phase 2' },
@@ -84,21 +110,29 @@ export const CASE_STUDIES: CaseStudy[] = [
         type: 'text',
         heading: 'Overview',
         paragraphs: [
-          'We identified a gap in how real estate investors evaluate property performance and uncovered a repeatable method to increase rental income and asset value.',
-          'This led to the development of a data-driven product that helps investors make clearer, faster decisions around property upgrades and pricing.',
+          'We identified a gap in how real estate investors evaluate property performance and developed a repeatable method for identifying opportunities to increase rental income and asset value.',
+          'This led to Get Rent Ready—a data-driven product designed to help investors make clearer, faster decisions about rental performance, property improvements, and where to invest.',
+        ],
+        resultsLabel: 'Multi-Unit Property Results',
+        results: [
+          { label: 'Increase in rental income', value: '24%' },
+          { label: 'Increase in asset value', value: '5–6%' },
+          { label: 'Reduction in operating expenses', value: '4–5%' },
         ],
       },
       {
         type: 'text',
         heading: 'The Problem',
         paragraphs: [
-          'Most investors struggle to translate complex financial metrics—cap rate, cash-on-cash return, IRR—into actionable decisions.',
+          'Many rental properties have untapped income and asset value, but owners often lack a clear way to identify where those opportunities exist or how to capture them.',
+          'A unit may be renting below its market potential, an improvement may generate additional income, or investment may be going toward upgrades that produce little financial return.',
           'As a result:',
         ],
         bullets: [
-          'Opportunities to increase rent and value are often missed',
-          'Decision-making is inconsistent and intuition-driven',
-          'Existing tools are fragmented and difficult to interpret',
+          'Rental income opportunities go unidentified',
+          'Potential asset value remains unrealized',
+          'Improvements are made without a clear understanding of ROI',
+          'Owners lack a consistent way to prioritize where to invest',
         ],
       },
       {
@@ -157,15 +191,42 @@ export const CASE_STUDIES: CaseStudy[] = [
         ],
       },
       {
+        type: 'image',
+        heading: 'The Product',
+        intro:
+          'A unit view from Get Rent Ready — current rent benchmarked against comparable units nearby, with a renovation path showing how upgrades move the unit toward a higher rent grade.',
+        src: '/apps/getrenteady/getrentready_unit.png',
+        alt: 'Get Rent Ready unit detail screen showing current vs. target rent, comparable listings, and a renovation path to a higher grade',
+      },
+      {
         type: 'chain',
-        heading: 'System Thinking',
-        intro: 'This product sits at the intersection of:',
-        bullets: [
-          'Physical assets (apartment quality)',
-          'Market dynamics (rent comps, demand)',
-          'Financial performance (cash flow, valuation)',
+        heading: 'How the Model Works',
+        intro:
+          'Get Rent Ready uses market data to understand how apartment quality and features relate to rental value.',
+        layers: [
+          {
+            label: 'Grade the Market',
+            description:
+              'We sampled and scored 900+ Oakland rental listings, assigning each apartment a grade from D to A based on four dimensions: Location, Amenities, Quality, and Size.',
+          },
+          {
+            label: 'Model Rental Value',
+            description:
+              'Using the graded dataset, we applied linear regression to identify how these property characteristics relate to asking rents and estimate market rent for comparable units.',
+          },
+          {
+            label: 'Identify the Opportunity',
+            description:
+              "A property's current rent and condition can then be compared with similar units in the market to estimate the gap between current performance and its potential.",
+          },
+          {
+            label: 'Support Investment Decisions',
+            description:
+              'The analysis helps owners see what is driving higher rents, where improvements may create value, and which investments may offer the strongest potential return.',
+          },
         ],
-        chain: ['Unit Condition', 'Rent Potential', 'Cash Flow', 'Asset Value'],
+        chainLabel: 'Decision Model',
+        chain: ['900+ listings', 'Grade', 'Model', 'Compare', 'Recommend'],
       },
     ],
   },
@@ -531,12 +592,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Exploring how virtual try-on can increase purchase confidence and reduce returns—while validating product viability before investment.',
     metaBelow: true,
     heroImage: '/images/portfolio/amazon/amazons-CJAIeNbr.png',
-    stats: [
-      { label: 'Problem', value: 'Returns' },
-      { label: 'Category', value: 'Apparel' },
-      { label: 'Approach', value: 'POC' },
-      { label: 'Focus', value: 'Confidence' },
-    ],
+    stats: [],
     images: [
       {
         src: '/images/portfolio/amazon/amazons-CJAIeNbr.png',
@@ -694,12 +750,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Partnered with YOSS (an Adecco Group company) to define user needs across a two-sided marketplace connecting businesses with independent professionals.',
     metaBelow: true,
     heroImage: '/images/portfolio/yoss-D4gN2hxd.png',
-    stats: [
-      { label: 'User groups studied', value: '2' },
-      { label: 'Research method', value: 'Qualitative' },
-      { label: 'Deliverables', value: 'Archetypes' },
-      { label: 'Outcome', value: 'Product direction' },
-    ],
+    stats: [],
     images: [
       {
         src: '/images/portfolio/ur_participants.png',
@@ -831,6 +882,303 @@ export const CASE_STUDIES: CaseStudy[] = [
           'User segmentation should be behavior-driven, not demographic',
           'Research must translate into clear product implications',
           'Early alignment and stakeholder buy-in are critical for impact',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'generations-in-color',
+    company: 'Generations in Color',
+    eyebrow: 'Generations in Color',
+    title: 'An Intergenerational Public Art Initiative for Alameda',
+    tagline: 'Public Art Proposal',
+    meta: 'Interactive Proposal Site · 2026',
+    role: 'Concept · Product Design · Web Development',
+    description:
+      'A civic proposal pairing experienced local artists with young people to collaboratively design and paint public artwork across Alameda, starting with utility boxes — designed and built as an interactive, narrative-driven site instead of a static PDF.',
+    metaBelow: true,
+    heroImage: '/apps/generations/_generations.png',
+    liveUrl: 'https://generations-mu.vercel.app/',
+    liveLabel: 'View live proposal',
+    stats: [
+      { label: 'Utility boxes (pilot)', value: '8–10' },
+      { label: 'Youth participants (pilot)', value: '8–16' },
+      { label: 'Proposal sections', value: '20' },
+      { label: 'Status', value: 'Under review' },
+    ],
+    images: [
+      {
+        src: '/apps/generations/generations-mobile.PNG',
+        caption: 'Proposal overview',
+      },
+      {
+        src: '/apps/generations/generations-mobile2.PNG',
+        caption: 'Utility box pilot map',
+      },
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Overview',
+        paragraphs: [
+          'Generations in Color is a proposal to the Alameda Arts Commission for a framework that pairs experienced local artists with young people to collaboratively design and paint public artwork across the city, beginning with utility boxes.',
+          'Rather than presenting the idea as a static PDF, I designed and built it as an interactive, narrative-driven website — so commissioners and stakeholders could explore the proposal at their own pace, or follow a guided walkthrough structured like a five-part story.',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'The Problem',
+        paragraphs: [
+          'Public art proposals are usually pitched as documents: a PDF, a deck, a stack of renderings. That format struggles to convey something this initiative depends on — that the process (mentorship, collaboration, shared learning) matters as much as the finished murals.',
+        ],
+        bullets: [
+          "A flat document can't distinguish the framework's five movements — Discover, Learn, Collaborate, Create, Grow — from a list of unordered features",
+          'Reviewers skim; a linear deck buries the framing before the ask',
+          'The proposal needed to work for two audiences at once: commissioners reviewing it in five minutes, and stakeholders reading it closely',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'Key Insight',
+        paragraphs: [
+          'Treating the proposal itself as a designed artifact — not just its contents — was the real product problem.',
+        ],
+        bullets: [
+          'Structuring the 20 sections into five narrative phases let people either browse freely or follow a guided, slide-by-slide story',
+          'A "digital companion" concept for the murals themselves — QR-code plaques linking to each artwork\'s story — reinforced the initiative\'s real subject: relationships, not paint',
+          'A working print/PDF export meant the interactive site never became a liability for reviewers who still wanted a document',
+        ],
+      },
+      {
+        type: 'numbered',
+        heading: 'Approach',
+        items: [
+          {
+            title: 'Structure',
+            bullets: [
+              'Organized 20 proposal sections into five journey phases: Discover, Learn, Collaborate, Create, Grow',
+              'Built both a free-browse mode and a guided, slide-by-slide story mode',
+            ],
+          },
+          {
+            title: 'Content System',
+            bullets: [
+              'Modeled every section, stat, and precedent as structured content data rather than hardcoded copy, so language could be revised without touching layout code',
+              'Kept the project name and pilot figures explicitly provisional throughout, since neither was finalized',
+            ],
+          },
+          {
+            title: 'Interactive Companion',
+            bullets: [
+              'Designed a sample artwork-story page previewing the QR-code companion experience proposed for a future phase',
+              'Included a community dashboard concept, clearly labeled as illustrative, to show commissioners where the platform could grow',
+            ],
+          },
+          {
+            title: 'Presentation-Ready',
+            bullets: [
+              'Built a print/PDF-formatted version of the full proposal for reviewers who preferred a document',
+              'Shipped as a live, shareable site rather than a static file, so it can be updated as the proposal evolves',
+            ],
+          },
+        ],
+      },
+      {
+        type: 'chain',
+        heading: 'System Thinking',
+        intro:
+          'The proposal itself is organized around the same four pillars it asks the Commission to fund:',
+        chain: ['Connect', 'Learn', 'Create', 'Grow'],
+      },
+      {
+        type: 'text',
+        heading: 'Status',
+        paragraphs: [
+          'Generations in Color is a live proposal, not a completed program. The pilot figures — 8–10 utility boxes, 6–8 artists, 8–16 youth participants — are explicitly framed as preliminary, pending collaboration with the Arts Commission, city staff, and community partners.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'property-deal-sheet',
+    company: 'Property Deal Sheet',
+    eyebrow: 'Property Deal Sheet',
+    title: 'A Fast First Read on if a Property is Worth Pursuing',
+    tagline: 'Real Estate Deal Screening Tool',
+    meta: 'Proof of Concept · 2026',
+    role: 'Design · Development · User Research',
+    description:
+      'A quick-read profitability calculator for rental deals — and a proof of concept for comparing AI-assisted development platforms and design systems against a real underwriting problem.',
+    metaBelow: true,
+    heroImage: '/apps/deal-sheet/dealsheet4.png',
+    liveUrl: 'https://v0-grr-calc.vercel.app/',
+    liveLabel: 'Try the Tool',
+    stats: [
+      { label: 'Format', value: 'Proof of Concept' },
+      { label: 'Focus', value: 'AI Platform Comparison' },
+      { label: 'Inputs', value: '2' },
+      { label: 'Live Outputs', value: '4 Metrics' },
+    ],
+    images: [
+      {
+        src: '/apps/deal-sheet/property-deal-sheet.png',
+        caption: 'An earlier build of the same tool, on a different platform',
+      },
+    ],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Overview',
+        paragraphs: [
+          "Real estate investors use dozens of methods to evaluate a deal, but a few tried-and-true questions can tell you almost immediately whether it's worth a closer look:",
+        ],
+        bullets: [
+          'Does the property generate positive monthly cash flow?',
+          "Based on comparable sales, what's the cap rate at this purchase price?",
+          'Would this money earn a better return somewhere else? (cash-on-cash return)',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'The Problem',
+        paragraphs: [
+          'There are a lot of moving parts to analyze before purchasing real estate — a process known as underwriting. But before running a full analysis, investors need a faster, back-of-the-napkin way to tell whether a property is worth pursuing at all.',
+          'The starting point is simple: will this property make money? From there, the goal was to:',
+        ],
+        bullets: [
+          'Start from two inputs — price and income — and estimate the rest',
+          'Make the relationship between price, income, and returns easy to see at a glance',
+          'Let investors adjust assumptions and immediately see how the numbers move',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'Key Insight',
+        paragraphs: [
+          "A property either clears the bar or it doesn't — and investors want to know which in seconds, not spreadsheets.",
+        ],
+        bullets: [
+          'Time is the real constraint; most deals get screened before anyone opens a full underwriting model',
+          'Investors think in outcomes — cash flow up, returns up — not in financial models',
+          'A fast first pass determines whether deeper underwriting is worth the time at all',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'About This Build',
+        paragraphs: [
+          'This tool doubles as a proof of concept. Rather than build another throwaway demo, I used a real underwriting question as the test case to compare several AI-assisted ("vibe-coding") development platforms and design systems against each other — the same tool, built more than once, to see how each platform\'s defaults, constraints, and design language actually held up.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'property-development',
+    company: 'Property Development',
+    eyebrow: 'Property Development',
+    title:
+      'From Single-Family to Six-Unit: Rebuilding the Boomer Wealth Transfer as Attainable Housing',
+    subtitle:
+      'A case study in turning a $70–90T generational asset transfer into a scalable infill housing model.',
+    tagline: 'Infill Housing Financial Model',
+    meta: 'Real Estate Development · 2026',
+    role: 'Design · Development · Financial Modeling',
+    description:
+      'A case study in turning a $70–90T generational asset transfer into a scalable infill housing model — replacing single-family homes with 6–10-unit developments priced for the next generation.',
+    metaBelow: true,
+    heroImage: '/apps/prop-dev/prop-dev_desktop.png',
+    stats: [],
+    images: [],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Overview',
+        paragraphs: [
+          'Over the next decade, Baby Boomers will pass on an estimated $70–90 trillion in assets, much of it locked inside single-family homes. At the same time, younger generations are largely priced out of buying in those same markets. This project partners with aging homeowners to replace their single-family home with a small-footprint, higher-density development — 6–10 modular units in place of one — sold at a price the next generation can actually afford.',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'The Problem',
+        bullets: [
+          "The wealth is real, but it's stuck in real estate. Most Boomer net worth sits in home equity, about to change hands over the next ~10 years.",
+          "Heirs don't want the house. About 70% of the time, heirs sell an inherited home rather than keep it — they want the value, not the property.",
+          "The next generation can't buy in. Those same homes are unaffordable at their current single-family price point, in the same neighborhoods.",
+        ],
+        outro:
+          'The result: a huge, predictable wave of aging single-family lots about to hit the market — in exactly the places where housing is least affordable — with no mechanism connecting the two.',
+      },
+      {
+        type: 'text',
+        heading: 'Key Insight',
+        paragraphs: [
+          "The value isn't in the house — it's in the land, and what the land is allowed to become.",
+          'One lot that supports a single home today can support 6–10 smaller units instead, priced well below the original home but worth more collectively than one traditional sale. Because the eventual sale or inheritance is predictable (age, location, and asset data are largely knowable in advance), owners can be approached proactively — before the estate sale even happens.',
+        ],
+      },
+      {
+        type: 'numbered',
+        heading: 'Approach',
+        items: [
+          {
+            title: 'Identify Target Properties',
+            intro: 'Aging owners, strong land value, favorable zoning.',
+          },
+          {
+            title: 'Partner with the Owner Pre-Transfer',
+            intro: 'Offer a better outcome than a traditional sale.',
+          },
+          {
+            title: 'Raise Project-Level Capital',
+            intro: 'Sized off a detailed, defensible per-unit cost model.',
+          },
+          {
+            title: 'Tear Down and Rebuild at Higher Density',
+            intro: 'Smaller, efficient, all-electric units, 6–10 per lot.',
+          },
+          {
+            title: 'Sell into the Affordability Gap',
+            intro: 'Priced below prevailing single-family prices nearby.',
+          },
+        ],
+      },
+      {
+        type: 'image',
+        heading: "Modeling the Owner's Baseline",
+        intro:
+          'Before an owner will consider a different path, the traditional sale has to be on the table for comparison. This screen models that baseline — current home value, existing debt, and the estimated net proceeds from selling as-is today — including the step-up in cost basis that shelters heirs from capital gains tax on an inherited sale.',
+        src: '/apps/prop-dev/prop-dev.PNG',
+        alt: 'PropDev mobile screen showing home value, existing debt, and estimated net proceeds from selling as-is today',
+        mobile: true,
+      },
+      {
+        type: 'table',
+        heading: 'How the Model Works',
+        intro:
+          'At 6–10 units per lot, small per-unit cost swings compound fast — so pricing has to be built bottom-up, system by system, not estimated per square foot. The attached tool shows that approach applied to one system: all-electric mechanical (HVAC + hot water) for a 6-unit building, broken into equipment, distribution, electrical, and labor, with rebates and tax credits layered in to get to a true net cost.',
+        caption: '6-unit example (Alameda, CA, 2025–26 pricing)',
+        columns: ['System', 'Project total', 'Per-unit avg.'],
+        rows: [
+          ['Ducted heat pump HVAC', '$74,500 – $174,000', '~$12,400 – $29,000'],
+          ['Heat pump water heaters', '$18,300 – $44,400', '~$3,050 – $7,400'],
+          ['Net after incentives', '~$86,000 – $201,000', '~$14,300 – $33,500'],
+        ],
+        outro:
+          'The same bottom-up approach extends to structure, sitework, and soft costs, so the full per-unit price — and what it takes to hit an affordable sale price — can be defended line by line to capital partners and the owners trusting the model with their land.',
+      },
+      {
+        type: 'embed',
+        heading: 'Try the Calculator',
+        intro:
+          'A working version of the partnership deal calculator — model construction financing, a seller-financed note back to the homeowner, and a traditional-build vs. prefab comparison, across the Property, Development, Summary, and Ownership Op tabs.',
+        src: '/apps/prop-dev/app/index.html',
+        height: 1000,
+      },
+      {
+        type: 'text',
+        heading: 'Why It Matters',
+        paragraphs: [
+          'Without unit-level cost precision, "replace one house with six" is just an idea. With it, it\'s a repeatable product: a way to turn illiquid Boomer home equity into housing the next generation can actually buy — with enough margin to fund the next lot.',
         ],
       },
     ],

@@ -1,7 +1,9 @@
+import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import { CASE_STUDIES, ContentSection, getCaseStudy } from '@/lib/case-studies';
+import { cn } from '@/lib/utils';
 
 function MetaPills({
   study,
@@ -60,6 +62,36 @@ function SectionText({
             </li>
           ))}
         </ul>
+      )}
+      {section.results && (
+        <div className="mt-6">
+          {section.resultsLabel && (
+            <p className="text-muted-foreground mb-3 text-sm font-medium tracking-widest uppercase">
+              {section.resultsLabel}
+            </p>
+          )}
+          <div
+            className={`grid grid-cols-2 gap-4 ${
+              section.results.length === 3 ? 'sm:grid-cols-3' : 'md:grid-cols-4'
+            }`}
+          >
+            {section.results.map((stat) => (
+              <div key={stat.label} className="bg-accent rounded-[12px] p-4">
+                <p className="text-2xl font-black text-[#141414]">
+                  {stat.value}
+                </p>
+                <p className="text-muted-foreground mt-1 text-xs leading-snug">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {section.outro && (
+        <p className="text-muted-foreground mt-4 text-base leading-relaxed">
+          {section.outro}
+        </p>
       )}
     </div>
   );
@@ -169,7 +201,7 @@ function SectionChain({
       {section.chain && (
         <div className="bg-accent rounded-[12px] p-6">
           <p className="text-muted-foreground mb-4 text-sm font-medium tracking-widest uppercase">
-            System flow
+            {section.chainLabel ?? 'System flow'}
           </p>
           <div className="flex flex-wrap items-center gap-2">
             {section.chain.map((node, i) => (
@@ -257,6 +289,138 @@ function SectionVideo({
   );
 }
 
+function SectionEmbed({
+  section,
+}: {
+  section: Extract<ContentSection, { type: 'embed' }>;
+}) {
+  return (
+    <div className="border-border border-t pt-10">
+      <h2 className="mb-2 text-2xl font-black text-[#141414]">
+        {section.heading}
+      </h2>
+      {section.intro && (
+        <p className="text-muted-foreground mb-6 text-base leading-relaxed">
+          {section.intro}
+        </p>
+      )}
+      <div className="border-border overflow-hidden rounded-[16px] border">
+        <iframe
+          src={section.src}
+          title={section.heading}
+          loading="lazy"
+          style={{ width: '100%', height: section.height ?? 800, border: 0 }}
+        />
+      </div>
+      <a
+        href={section.src}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-tagline mt-3 inline-block text-sm font-medium underline underline-offset-2"
+      >
+        Open full screen ↗
+      </a>
+    </div>
+  );
+}
+
+function SectionImage({
+  section,
+}: {
+  section: Extract<ContentSection, { type: 'image' }>;
+}) {
+  return (
+    <div className="border-border border-t pt-10">
+      <h2 className="mb-2 text-2xl font-black text-[#141414]">
+        {section.heading}
+      </h2>
+      {section.intro && (
+        <p className="text-muted-foreground mb-6 text-base leading-relaxed">
+          {section.intro}
+        </p>
+      )}
+      <div
+        className={cn(
+          'bg-accent overflow-hidden rounded-[16px]',
+          section.mobile && 'mx-auto max-w-xs sm:max-w-sm',
+        )}
+      >
+        <Image
+          src={section.src}
+          alt={section.alt ?? section.heading}
+          width={section.mobile ? 500 : 1200}
+          height={section.mobile ? 1080 : 800}
+          className="h-auto w-full object-cover"
+        />
+      </div>
+    </div>
+  );
+}
+
+function SectionTable({
+  section,
+}: {
+  section: Extract<ContentSection, { type: 'table' }>;
+}) {
+  return (
+    <div className="border-border border-t pt-10">
+      <h2 className="mb-2 text-2xl font-black text-[#141414]">
+        {section.heading}
+      </h2>
+      {section.intro && (
+        <p className="text-muted-foreground mb-6 text-base leading-relaxed">
+          {section.intro}
+        </p>
+      )}
+      {section.caption && (
+        <p className="text-muted-foreground mb-3 text-sm font-medium tracking-widest uppercase">
+          {section.caption}
+        </p>
+      )}
+      <div className="border-border overflow-x-auto rounded-[12px] border">
+        <table className="w-full min-w-[480px] border-collapse text-sm">
+          <thead>
+            <tr className="bg-accent">
+              {section.columns.map((col, i) => (
+                <th
+                  key={i}
+                  className="text-muted-foreground px-4 py-3 text-left text-xs font-semibold tracking-wide uppercase"
+                >
+                  {col}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {section.rows.map((row, i) => (
+              <tr key={i} className="border-border border-t">
+                {row.map((cell, j) => (
+                  <td
+                    key={j}
+                    className={cn(
+                      'px-4 py-3',
+                      j === 0
+                        ? 'font-medium text-[#141414]'
+                        : 'text-muted-foreground',
+                    )}
+                  >
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {section.outro && (
+        <p className="text-muted-foreground mt-4 text-base leading-relaxed">
+          {section.outro}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function renderSection(section: ContentSection, i: number) {
   if (section.type === 'text') return <SectionText key={i} section={section} />;
   if (section.type === 'numbered')
@@ -267,6 +431,12 @@ function renderSection(section: ContentSection, i: number) {
     return <SectionResults key={i} section={section} />;
   if (section.type === 'video')
     return <SectionVideo key={i} section={section} />;
+  if (section.type === 'embed')
+    return <SectionEmbed key={i} section={section} />;
+  if (section.type === 'image')
+    return <SectionImage key={i} section={section} />;
+  if (section.type === 'table')
+    return <SectionTable key={i} section={section} />;
 }
 
 export default async function CaseStudyPage({
@@ -288,34 +458,56 @@ export default async function CaseStudyPage({
         {study.title}
       </h1>
 
+      {study.subtitle && (
+        <p className="text-muted-foreground mt-4 max-w-2xl text-lg leading-relaxed">
+          {study.subtitle}
+        </p>
+      )}
+
+      {study.liveUrl && (
+        <a
+          href={study.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-tagline text-primary-foreground mt-5 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
+        >
+          {study.liveLabel ?? 'View live site'}
+          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+        </a>
+      )}
+
       {/* Meta row — shown above stats unless metaBelow is set */}
       {!study.metaBelow && (study.tagline || study.meta || study.role) && (
         <MetaPills study={study} />
       )}
 
       {/* Stats */}
-      <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {study.stats.map((stat) => (
-          <div key={stat.label} className="bg-accent rounded-[12px] p-4">
-            <p className="text-2xl font-black text-[#141414]">{stat.value}</p>
-            <p className="text-muted-foreground mt-1 text-xs leading-snug">
-              {stat.label}
-            </p>
-          </div>
-        ))}
-      </div>
+      {study.stats.length > 0 && (
+        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {study.stats.map((stat) => (
+            <div key={stat.label} className="bg-accent rounded-[12px] p-4">
+              <p className="text-2xl font-black text-[#141414]">{stat.value}</p>
+              <p className="text-muted-foreground mt-1 text-xs leading-snug">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Hero image */}
-      <div className="bg-accent mt-10 overflow-hidden rounded-[16px]">
-        <Image
-          src={study.heroImage}
-          alt={study.title}
-          width={1200}
-          height={800}
-          className="h-auto w-full object-cover"
-          priority
-        />
-      </div>
+      {study.heroImage && (
+        <div className="bg-accent mt-10 overflow-hidden rounded-[16px]">
+          <Image
+            src={study.heroImage}
+            alt={study.title}
+            width={1200}
+            height={800}
+            className="h-auto w-full object-cover"
+            priority
+          />
+        </div>
+      )}
 
       {/* Meta row — shown below hero image when metaBelow is set */}
       {study.metaBelow && (study.tagline || study.meta || study.role) && (

@@ -60,10 +60,10 @@ export const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/#decision-tools"
+                    href="/#recent-explorations"
                     className="text-primary-foreground/90 hover:text-primary-foreground text-sm font-normal transition-colors"
                   >
-                    Decision Tools
+                    Recent Explorations
                   </Link>
                 </li>
                 <li>

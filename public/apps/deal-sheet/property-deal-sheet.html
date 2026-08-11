@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Property Deal Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#1B2A26;
+    --ink-soft:#4A5854;
+    --parchment:#ECE7DA;
+    --panel:#FFFDF8;
+    --line:#D8D1BE;
+    --slate:#34506B;
+    --slate-soft:#5D7A93;
+    --profit:#3F6B4E;
+    --profit-bg:#DCE7DD;
+    --amber:#9C7A24;
+    --amber-bg:#F0E4C4;
+    --loss:#A13D2C;
+    --loss-bg:#F1DAD3;
+    --focus:#34506B;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--parchment);}
+  body{
+    font-family:'Source Sans Pro',sans-serif;
+    color:var(--ink);
+    padding:20px 20px 50px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;}
+
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:clamp(26px,4.5vw,38px);
+    margin:0 0 20px;
+    letter-spacing:-0.01em;
+  }
+  @media (max-width:480px){
+    body{padding:16px 14px 40px;}
+    h1{margin:0 0 16px;}
+  }
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:22px;
+    margin-bottom:18px;
+  }
+
+  .inputs-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:520px){ .inputs-row{grid-template-columns:1fr;} }
+
+  label{
+    display:block;
+    font-size:11.5px;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .field{position:relative;}
+  .field .prefix{
+    position:absolute;
+    left:14px; top:50%;
+    transform:translateY(-50%);
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:22px;
+    pointer-events:none;
+  }
+  input.amount-input{
+    width:100%;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:26px;
+    padding:16px 14px 16px 34px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:#fff;
+    color:var(--ink);
+  }
+  input.amount-input:focus{border-color:var(--slate);}
+  .hint{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+  @media (max-width:380px){
+    input.amount-input{font-size:21px;padding:14px 12px 14px 30px;}
+    .field .prefix{font-size:18px;left:12px;}
+  }
+
+  details{margin-top:18px;}
+  summary{
+    cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+    padding:2px 0;
+  }
+  summary::marker{color:var(--slate-soft);}
+  .assumptions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:16px;
+  }
+  @media (max-width:700px){ .assumptions{grid-template-columns:1fr 1fr;} }
+  @media (max-width:460px){ .assumptions{grid-template-columns:1fr;} }
+  .a-field label{margin-bottom:4px;}
+  .a-field .row{display:flex;align-items:center;gap:8px;}
+  .a-field input[type=range]{flex:1;accent-color:var(--slate);}
+  .a-field .val{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    min-width:44px;
+    text-align:right;
+    color:var(--ink);
+  }
+
+  /* summary card */
+  .summary-head{
+    display:flex; justify-content:center; align-items:baseline;
+    margin-bottom:14px; flex-wrap:wrap; gap:8px;
+  }
+  .verdict{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:2px;
+    border:1px solid transparent;
+  }
+  .verdict.profit{background:var(--profit-bg);color:var(--profit);border-color:var(--profit);}
+  .verdict.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);}
+  .verdict.loss{background:var(--loss-bg);color:var(--loss);border-color:var(--loss);}
+
+  .metrics{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:640px){ .metrics{grid-template-columns:1fr 1fr;} }
+  .metric{background:var(--panel);padding:14px 16px;}
+  .metric .m-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:5px;
+  }
+  .metric .m-val{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:19px;
+    font-weight:600;
+  }
+
+  /* grid */
+  .grid-title{
+    font-family:'Playfair Display',serif;
+    font-weight:600;
+    font-size:18px;
+    margin:0 0 3px;
+  }
+  .grid-note{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 16px;
+    line-height:1.5;
+  }
+  .grid-scroll{overflow-x:auto;padding-bottom:4px;}
+  table.heatmap{
+    border-collapse:collapse;
+    width:100%;
+    min-width:640px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  table.heatmap th, table.heatmap td{
+    text-align:center;
+    padding:0;
+    font-size:12.5px;
+  }
+  .corner{
+    background:var(--panel);
+    border:1px solid var(--line);
+  }
+  .axis-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .col-head, .row-head{
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-weight:500;
+    padding:8px 6px;
+    white-space:nowrap;
+  }
+  .row-head{text-align:right;padding-right:10px;}
+  td.cell{
+    border:1px solid var(--line);
+    padding:10px 4px;
+    position:relative;
+    cursor:default;
+  }
+  td.cell .cv{font-weight:600;font-size:13px;}
+  td.cell.hit{
+    box-shadow: inset 0 0 0 2px var(--ink);
+  }
+  /* breakeven staircase: heavier border where sign flips from loss to profit going up in price (row above) */
+  td.cell.break-top{ border-top:3px solid var(--ink); }
+  td.cell.break-left{ border-left:3px solid var(--ink); }
+
+  .legend{
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+    margin-top:16px; font-size:12px; color:var(--ink-soft);
+  }
+  .legend .sw{display:inline-flex;align-items:center;gap:6px;}
+  .legend .chip{width:13px;height:13px;border-radius:2px;display:inline-block;}
+
+  footer{
+    margin-top:24px;
+    font-size:12px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <p class="eyebrow">Profitability Lookup</p>
+  <h1>Property Deal Sheet</h1>
+
+  <div class="panel">
+    <div class="inputs-row">
+      <div>
+        <label for="price">Property list price</label>
+        <div class="field">
+          <span class="prefix">$</span>
+          <input type="text" inputmode="numeric" autocomplete="off" class="amount-input" id="price" value="300,000">
+        </div>
+      </div>
+      <div>
+        <label for="income">Monthly income</label>
+        <div class="field">
+          <span class="prefix">$</span>
+          <input type="text" inputmode="numeric" autocomplete="off" class="amount-input" id="income" value="3,500">
+        </div>
+        <div class="hint" id="incomeAnnualHint">Annual: $42,000/yr</div>
+      </div>
+    </div>
+
+    <details>
+      <summary>Assumptions</summary>
+      <div class="assumptions">
+        <div class="a-field">
+          <label for="down">Down payment</label>
+          <div class="row">
+            <input type="range" id="down" min="0" max="60" step="1" value="20">
+            <span class="val" id="downVal">20%</span>
+          </div>
+        </div>
+        <div class="a-field">
+          <label for="expense">Operating expenses</label>
+          <div class="row">
+            <input type="range" id="expense" min="0" max="80" step="1" value="40">
+            <span class="val" id="expenseVal">40%</span>
+          </div>
+        </div>
+        <div class="a-field">
+          <label for="rate">Mortgage rate</label>
+          <div class="row">
+            <input type="range" id="rate" min="0" max="15" step="0.125" value="6">
+            <span class="val" id="rateVal">6.00%</span>
+          </div>
+        </div>
+        <div class="a-field">
+          <label for="term">Loan term</label>
+          <div class="row">
+            <input type="range" id="term" min="10" max="40" step="5" value="30">
+            <span class="val" id="termVal">30 yr</span>
+          </div>
+        </div>
+        <div class="a-field">
+          <label for="rangePct">Grid range (each way)</label>
+          <div class="row">
+            <input type="range" id="rangePct" min="5" max="40" step="5" value="15">
+            <span class="val" id="rangePctVal">15%</span>
+          </div>
+        </div>
+        <div class="a-field">
+          <label for="stepsCount">Grid steps per side</label>
+          <div class="row">
+            <input type="range" id="stepsCount" min="1" max="5" step="1" value="3">
+            <span class="val" id="stepsCountVal">3</span>
+          </div>
+        </div>
+        <div class="a-field">
+          <label for="threshold">"Profitable" threshold</label>
+          <div class="row">
+            <input type="range" id="threshold" min="0" max="20" step="1" value="8">
+            <span class="val" id="thresholdVal">8%</span>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="panel">
+    <div class="summary-head">
+      <span class="verdict" id="verdict">—</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="m-label">Cash-on-cash return</div>
+        <div class="m-val" id="mCoC">—</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">Cap rate</div>
+        <div class="m-val" id="mCap">—</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">DSCR</div>
+        <div class="m-val" id="mDscr">—</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">Monthly cash flow</div>
+        <div class="m-val" id="mCF">—</div>
+      </div>
+    </div>
+
+    <div class="grid-scroll" style="margin-top:18px;">
+      <table class="heatmap" id="heatmap"></table>
+    </div>
+    <div class="legend">
+      <span class="sw"><span class="chip" style="background:var(--loss-bg);border:1px solid var(--loss);"></span>Negative return</span>
+      <span class="sw"><span class="chip" style="background:var(--amber-bg);border:1px solid var(--amber);"></span><span id="legendMid">0–8% return</span></span>
+      <span class="sw"><span class="chip" style="background:var(--profit-bg);border:1px solid var(--profit);"></span><span id="legendHigh">8%+ return</span></span>
+      <span class="sw"><span class="chip" style="background:#fff;border:2px solid var(--ink);"></span>Your inputs</span>
+    </div>
+  </div>
+
+  <footer>
+    Figures are illustrative estimates based on the assumptions above (down payment, operating expense ratio, interest rate, loan term) and standard mortgage amortization. They don't account for closing costs, vacancy, capex reserves, taxes on income, or financing terms specific to you. This isn't financial or investment advice — confirm numbers with a lender or advisor before acting on them.
+  </footer>
+</div>
+
+<script>
+(function(){
+  const priceEl = document.getElementById('price');
+  const incomeEl = document.getElementById('income');
+  const downEl = document.getElementById('down');
+  const expenseEl = document.getElementById('expense');
+  const rateEl = document.getElementById('rate');
+  const termEl = document.getElementById('term');
+  const rangePctEl = document.getElementById('rangePct');
+  const stepsCountEl = document.getElementById('stepsCount');
+  const thresholdEl = document.getElementById('threshold');
+
+  const downVal = document.getElementById('downVal');
+  const expenseVal = document.getElementById('expenseVal');
+  const rateVal = document.getElementById('rateVal');
+  const termVal = document.getElementById('termVal');
+  const rangePctVal = document.getElementById('rangePctVal');
+  const stepsCountVal = document.getElementById('stepsCountVal');
+  const thresholdVal = document.getElementById('thresholdVal');
+
+  function fmtMoney(n){
+    const sign = n < 0 ? '-' : '';
+    n = Math.abs(n);
+    return sign + '$' + Math.round(n).toLocaleString('en-US');
+  }
+  function fmtPct(n){
+    return (n>=0?'':'') + (n*100).toFixed(1) + '%';
+  }
+
+  function annualDebtService(loanAmount, ratePct, termYears){
+    const r = (ratePct/100)/12;
+    const n = termYears*12;
+    if(loanAmount<=0) return 0;
+    let monthly;
+    if(r === 0){
+      monthly = loanAmount/n;
+    } else {
+      monthly = loanAmount * r / (1 - Math.pow(1+r, -n));
+    }
+    return monthly*12;
+  }
+
+  function calc(price, income, downPct, expensePct, ratePct, termYears){
+    const noi = income * (1 - expensePct/100);
+    const downPayment = price * (downPct/100);
+    const loan = price - downPayment;
+    const ads = annualDebtService(loan, ratePct, termYears);
+    const cashFlow = noi - ads;
+    const coc = downPayment > 0 ? cashFlow/downPayment : (cashFlow>0?Infinity:-Infinity);
+    const capRate = price > 0 ? noi/price : 0;
+    const dscr = ads > 0 ? noi/ads : Infinity;
+    return {noi, downPayment, loan, ads, cashFlow, coc, capRate, dscr};
+  }
+
+  function verdictFor(coc, threshold){
+    if(coc >= threshold) return {label:'Profitable', cls:'profit'};
+    if(coc >= 0) return {label:'Marginal', cls:'amber'};
+    return {label:'Unprofitable', cls:'loss'};
+  }
+
+  function cellClass(coc, threshold){
+    if(coc >= threshold) return {bg:'var(--profit-bg)', fg:'var(--profit)'};
+    if(coc >= 0) return {bg:'var(--amber-bg)', fg:'var(--amber)'};
+    return {bg:'var(--loss-bg)', fg:'var(--loss)'};
+  }
+
+  function round(n, step){ return Math.round(n/step)*step; }
+
+  function render(){
+    const price = parseFloat(String(priceEl.value).replace(/,/g,'')) || 0;
+    const monthlyIncome = parseFloat(String(incomeEl.value).replace(/,/g,'')) || 0;
+    const income = monthlyIncome * 12; // calculations run on annual income
+    document.getElementById('incomeAnnualHint').textContent = `Annual: ${fmtMoney(income)}/yr`;
+    const downPct = parseFloat(downEl.value);
+    const expensePct = parseFloat(expenseEl.value);
+    const ratePct = parseFloat(rateEl.value);
+    const termYears = parseFloat(termEl.value);
+    const rangePct = parseFloat(rangePctEl.value);
+    const stepsCount = parseInt(stepsCountEl.value, 10);
+    const thresholdPct = parseFloat(thresholdEl.value);
+    const threshold = thresholdPct/100;
+
+    downVal.textContent = downPct + '%';
+    expenseVal.textContent = expensePct + '%';
+    rateVal.textContent = ratePct.toFixed(2) + '%';
+    termVal.textContent = termYears + ' yr';
+    rangePctVal.textContent = rangePct + '%';
+    stepsCountVal.textContent = stepsCount;
+    thresholdVal.textContent = thresholdPct + '%';
+
+    document.getElementById('legendMid').textContent = `0–${thresholdPct}% return`;
+    document.getElementById('legendHigh').textContent = `${thresholdPct}%+ return`;
+
+    // summary at exact inputs
+    const base = calc(price, income, downPct, expensePct, ratePct, termYears);
+    const v = verdictFor(base.coc, threshold);
+    document.getElementById('verdict').textContent = v.label;
+    document.getElementById('verdict').className = 'verdict ' + v.cls;
+    document.getElementById('mCoC').textContent = isFinite(base.coc) ? fmtPct(base.coc) : '—';
+    document.getElementById('mCap').textContent = fmtPct(base.capRate);
+    document.getElementById('mDscr').textContent = isFinite(base.dscr) ? base.dscr.toFixed(2)+'x' : '—';
+    document.getElementById('mCF').textContent = fmtMoney(base.cashFlow/12);
+
+    // grid: rows (price) x cols (monthly income), +/-rangePct in stepsCount increments per side
+    const stepSize = rangePct/stepsCount;
+    const steps = [];
+    for(let i=-stepsCount;i<=stepsCount;i++){ steps.push((i*stepSize)/100); }
+    const priceStepUnit = price > 200000 ? 5000 : 1000;
+    const monthlyStepUnit = monthlyIncome > 5000 ? 250 : 50;
+
+    const rows = steps.map(s => round(price*(1+s), priceStepUnit)).reverse(); // highest price at top
+    const cols = steps.map(s => round(monthlyIncome*(1+s), monthlyStepUnit)); // monthly income values
+
+    // precompute grid of coc values (convert monthly column to annual for the math)
+    const matrix = rows.map(rp => cols.map(ciMonthly => {
+      const c = calc(rp, ciMonthly*12, downPct, expensePct, ratePct, termYears);
+      return c.coc;
+    }));
+
+    let html = '<tr><td class="corner"></td>';
+    html += `<td class="corner axis-label" colspan="${cols.length}" style="text-align:center;">monthly income &rarr;</td></tr>`;
+    html += '<tr><td class="corner"></td>';
+    cols.forEach(c => { html += `<td class="col-head">${fmtMoney(c)}</td>`; });
+    html += '</tr>';
+
+    rows.forEach((rp, ri) => {
+      html += `<tr>`;
+      if(ri===0){
+        html += `<td class="row-head axis-label" rowspan="${rows.length}" style="writing-mode:vertical-rl;transform:rotate(180deg);vertical-align:middle;">price &darr;</td>`;
+      }
+      html += `<td class="row-head">${fmtMoney(rp)}</td>`;
+      cols.forEach((ciMonthly, colIdx) => {
+        const coc = matrix[ri][colIdx];
+        const style = cellClass(coc, threshold);
+        const isHit = (rp === round(price, priceStepUnit)) && (ciMonthly === round(monthlyIncome, monthlyStepUnit));
+        let cls = 'cell' + (isHit ? ' hit' : '');
+
+        // breakeven staircase: heavy top border if cell above (lower price row, since rows desc) flips sign
+        if(ri>0){
+          const above = matrix[ri-1][colIdx];
+          if((above<0) !== (coc<0)) cls += ' break-top';
+        }
+        if(colIdx>0){
+          const left = matrix[ri][colIdx-1];
+          if((left<0) !== (coc<0)) cls += ' break-left';
+        }
+
+        html += `<td class="${cls}" style="background:${style.bg};color:${style.fg};">`+
+                 `<span class="cv">${isFinite(coc)? (coc*100).toFixed(1)+'%' : '—'}</span></td>`;
+      });
+      html += `</tr>`;
+    });
+
+    document.getElementById('heatmap').innerHTML = html;
+  }
+
+  [downEl, expenseEl, rateEl, termEl, rangePctEl, stepsCountEl, thresholdEl].forEach(el => {
+    el.addEventListener('input', render);
+  });
+
+  function formatWithCommas(el){
+    const raw = el.value;
+    const caret = el.selectionStart;
+    const digitsBeforeCaret = raw.slice(0, caret).replace(/[^\d]/g, '').length;
+
+    const digitsOnly = raw.replace(/[^\d]/g, '');
+    const numeric = digitsOnly === '' ? '' : String(parseInt(digitsOnly, 10));
+    const formatted = numeric === '' ? '' : Number(numeric).toLocaleString('en-US');
+
+    el.value = formatted;
+
+    let digitsSeen = 0, pos = 0;
+    while(pos < formatted.length && digitsSeen < digitsBeforeCaret){
+      if(/\d/.test(formatted[pos])) digitsSeen++;
+      pos++;
+    }
+    el.setSelectionRange(pos, pos);
+  }
+
+  [priceEl, incomeEl].forEach(el => {
+    el.addEventListener('input', () => { formatWithCommas(el); render(); });
+    el.addEventListener('blur', () => { if(el.value.trim()==='') el.value = '0'; });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

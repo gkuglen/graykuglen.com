@@ -3,8 +3,64 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { CASE_STUDIES } from '@/lib/case-studies';
 import { cn } from '@/lib/utils';
+
+type NavItem = { name: string; subtitle: string; href: string };
+type NavGroup = { label: string; items: NavItem[] };
+
+const NAV_GROUPS: NavGroup[] = [
+  {
+    label: 'Example Work',
+    items: [
+      {
+        name: 'Get Rent Ready',
+        subtitle: 'Rental Performance & Asset Value',
+        href: '/work/get-real-ready',
+      },
+      {
+        name: 'Azibo',
+        subtitle: 'Property Insurance for Landlords',
+        href: '/work/azibo-insurance',
+      },
+      {
+        name: 'Kaiser Permanente',
+        subtitle: 'Home-Based Healthcare',
+        href: '/work/kaiser',
+      },
+      { name: 'Amazon', subtitle: 'Virtual Try-On', href: '/work/amazon' },
+      {
+        name: 'YOSS / Adecco',
+        subtitle: 'Freelance Marketplace Research',
+        href: '/work/yoss-adecco',
+      },
+    ],
+  },
+  {
+    label: 'Recent Apps',
+    items: [
+      {
+        name: 'Generations in Color',
+        subtitle: 'Community Public Art',
+        href: '/work/generations-in-color',
+      },
+      {
+        name: 'Property Deal Sheet',
+        subtitle: 'Property Investment Analysis',
+        href: '/work/property-deal-sheet',
+      },
+      {
+        name: 'Get Rent Ready',
+        subtitle: 'Rental Market Analysis',
+        href: '/work/get-real-ready',
+      },
+      {
+        name: 'Property Development',
+        subtitle: 'Development Feasibility',
+        href: '/work/property-development',
+      },
+    ],
+  },
+];
 
 const WorkSidebar = () => {
   const pathname = usePathname();
@@ -33,36 +89,40 @@ const WorkSidebar = () => {
           Back
         </Link>
 
-        <p className="text-muted-foreground mb-1 hidden text-xs font-semibold tracking-widest uppercase lg:block">
-          Case Studies
-        </p>
+        {NAV_GROUPS.map((group, groupIndex) => (
+          <div key={group.label} className={groupIndex > 0 ? 'mt-6' : ''}>
+            <p className="text-muted-foreground mb-1 hidden text-xs font-semibold tracking-widest uppercase lg:block">
+              {group.label}
+            </p>
 
-        <nav className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-x-visible">
-          {CASE_STUDIES.map((study) => {
-            const isActive = pathname === `/work/${study.slug}`;
-            return (
-              <Link
-                key={study.slug}
-                href={`/work/${study.slug}`}
-                className={cn(
-                  'rounded-lg px-3 py-2 text-sm transition-colors lg:flex lg:flex-col',
-                  'shrink-0 lg:shrink',
-                  isActive
-                    ? 'bg-accent text-foreground font-medium'
-                    : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
-                )}
-              >
-                <span className="text-xs font-semibold tracking-wide uppercase opacity-60">
-                  {study.eyebrow}
-                </span>
-                <span className="mt-0.5 hidden leading-snug lg:block">
-                  {study.title}
-                </span>
-                <span className="block lg:hidden">{study.company}</span>
-              </Link>
-            );
-          })}
-        </nav>
+            <nav className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-x-visible">
+              {group.items.map((item, itemIndex) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={`${group.label}-${itemIndex}`}
+                    href={item.href}
+                    className={cn(
+                      'rounded-lg px-3 py-2 text-sm transition-colors lg:flex lg:flex-col',
+                      'shrink-0 lg:shrink',
+                      isActive
+                        ? 'bg-accent text-foreground font-medium'
+                        : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground',
+                    )}
+                  >
+                    <span className="text-xs font-semibold tracking-wide uppercase opacity-60">
+                      {item.name}
+                    </span>
+                    <span className="mt-0.5 hidden leading-snug lg:block">
+                      {item.subtitle}
+                    </span>
+                    <span className="block lg:hidden">{item.subtitle}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        ))}
       </div>
     </aside>
   );
