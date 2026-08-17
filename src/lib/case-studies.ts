@@ -16,6 +16,7 @@ export type ContentSection =
         title: string;
         intro?: string;
         bullets?: string[];
+        outro?: string;
       }[];
     }
   | {
@@ -50,6 +51,7 @@ export type ContentSection =
       type: 'image';
       heading: string;
       intro?: string;
+      paragraphs?: string[];
       src: string;
       alt?: string;
       mobile?: boolean;
@@ -90,11 +92,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     eyebrow: 'Get Rent Ready',
     title:
       'Get Rent Ready: Using Market Data to Increase Rental Income and Property Value',
+    subtitle:
+      'I developed a data-driven approach to identify rent potential, prioritize property improvements, and measure their financial impact. Applied to a real property, the approach increased rental income by 24%, reduced operating expenses by 4–5%, and increased estimated asset value by 5–6%.',
     tagline: 'Real Estate Analytics Platform',
     meta: 'Responsive Web App · 2025',
     role: 'Product Design · Research · Strategy',
     description:
-      'Data-driven valuation models increased cash flow by 16% on a single unit while driving a 5–6% lift in asset value. Scaled across a portfolio, this approach delivered a 46% increase in cash flow and reduced expenses by 4–5% since 2023.',
+      'A data-driven approach to identify rent potential, prioritize property improvements, and measure their financial impact — increasing rental income by 24%, reducing operating expenses by 4–5%, and lifting estimated asset value by 5–6% on a real property.',
     metaBelow: true,
     heroImage: '/apps/getrenteady/updated_getrentready.png',
     stats: [],
@@ -110,13 +114,14 @@ export const CASE_STUDIES: CaseStudy[] = [
         type: 'text',
         heading: 'Overview',
         paragraphs: [
-          'We identified a gap in how real estate investors evaluate property performance and developed a repeatable method for identifying opportunities to increase rental income and asset value.',
+          'Real estate investors have access to enormous amounts of market data, but determining what to do with it is much harder.',
+          'I identified an opportunity to develop a repeatable method for comparing rental properties to the market, identifying underperformance, and determining where improvements could generate meaningful financial returns.',
           'This led to Get Rent Ready—a data-driven product designed to help investors make clearer, faster decisions about rental performance, property improvements, and where to invest.',
         ],
-        resultsLabel: 'Multi-Unit Property Results',
+        resultsLabel: 'Real Property Results',
         results: [
           { label: 'Increase in rental income', value: '24%' },
-          { label: 'Increase in asset value', value: '5–6%' },
+          { label: 'Increase in estimated asset value', value: '5–6%' },
           { label: 'Reduction in operating expenses', value: '4–5%' },
         ],
       },
@@ -125,7 +130,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         heading: 'The Problem',
         paragraphs: [
           'Many rental properties have untapped income and asset value, but owners often lack a clear way to identify where those opportunities exist or how to capture them.',
-          'A unit may be renting below its market potential, an improvement may generate additional income, or investment may be going toward upgrades that produce little financial return.',
+          'A unit may be renting below its market potential. An improvement may generate additional income. Or capital may be going toward upgrades that produce little financial return.',
           'As a result:',
         ],
         bullets: [
@@ -140,52 +145,59 @@ export const CASE_STUDIES: CaseStudy[] = [
         heading: 'Key Insight',
         paragraphs: [
           "Investors don't want more data—they want clear direction on what to do next.",
-          'Additionally:',
+          'Through research and testing, several patterns emerged:',
         ],
         bullets: [
-          'Many decisions are influenced by agents, not just owners',
-          'Users prioritize outcomes (rent ↑, value ↑), not financial models',
-          'Simplicity drives adoption more than analytical depth',
+          'Many investment decisions are influenced by agents and property managers, not just owners',
+          'Users prioritize outcomes—rent, cash flow, and property value—over complex financial models',
+          'Investors want to understand the financial impact before committing capital',
+          'Simplicity and clear recommendations drive adoption more than analytical depth',
         ],
+        outro:
+          'The opportunity was to translate complex market information into a relatively simple question: where can I invest in this property to generate the strongest return?',
       },
       {
         type: 'numbered',
         heading: 'Approach',
         intro:
-          'We started with real-world outcomes and worked backward to define the product.',
+          'We started with real-world property outcomes and worked backward to define the product.',
         items: [
           {
             title: 'Real-World Testing',
-            intro: 'Executed renovations across multiple units to validate:',
+            intro:
+              'Renovations across multiple units were used to understand and validate:',
             bullets: [
               'Rent lift potential',
-              'Cost vs return thresholds',
-              'Market response',
+              'Cost-versus-return thresholds',
+              'Which improvements influenced marketability',
+              'How the market responded to renovated units',
             ],
+            outro:
+              'These projects helped establish the financial framework behind the product.',
           },
           {
             title: 'Market + Data Analysis',
-            bullets: [
-              'Built datasets across multiple cities',
-              'Benchmarked unit quality vs rent performance',
-              'Identified patterns between upgrades and revenue',
-            ],
+            intro:
+              'I built datasets of comparable rental listings and analyzed the relationship between apartment characteristics, condition, amenities, location, and asking rent.',
+            outro:
+              'This allowed us to benchmark individual units against the market rather than relying primarily on intuition or broad rent averages.',
           },
           {
             title: 'Concept Iteration',
-            intro: 'Tested lightweight concepts before building:',
-            bullets: [
-              'Gen 1: Asset management tools → low traction',
-              'Gen 2: Cash flow optimization → strong validation',
-            ],
+            intro:
+              'Early concepts explored broader asset-management tools, but testing showed limited traction.',
+            outro:
+              'A second direction focused much more specifically on cash flow and rent optimization. Users responded more strongly when the product connected market information directly to a financial opportunity — shifting it from a collection of property-management tools toward a decision-support platform for real estate investment.',
           },
           {
             title: 'Product Direction',
-            intro: 'Shifted toward a decision-support tool that:',
+            intro: 'The resulting product was designed to:',
             bullets: [
-              'Quantifies upgrade impact',
-              'Simplifies financial outputs',
-              'Recommends actionable improvements',
+              'Benchmark current rents against comparable properties',
+              'Identify potential rent opportunities',
+              'Show what characteristics are driving higher rents',
+              'Estimate the financial impact of improvements',
+              'Help investors prioritize where to deploy capital',
             ],
           },
         ],
@@ -193,8 +205,12 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         type: 'image',
         heading: 'The Product',
-        intro:
-          'A unit view from Get Rent Ready — current rent benchmarked against comparable units nearby, with a renovation path showing how upgrades move the unit toward a higher rent grade.',
+        paragraphs: [
+          'Get Rent Ready gives investors a unit-level view of property performance.',
+          'Current rent is benchmarked against comparable nearby apartments, allowing an owner to see where the unit sits within the market and how its condition, amenities, size, and location compare with higher-performing properties.',
+          'From there, the product identifies potential improvements and helps connect those decisions to rent potential, cash flow, and estimated property value.',
+          "The goal is not simply to tell an investor what an apartment could rent for. It's to help answer why—and what they can do about it.",
+        ],
         src: '/apps/getrenteady/getrentready_unit.png',
         alt: 'Get Rent Ready unit detail screen showing current vs. target rent, comparable listings, and a renovation path to a higher grade',
       },
@@ -202,31 +218,36 @@ export const CASE_STUDIES: CaseStudy[] = [
         type: 'chain',
         heading: 'How the Model Works',
         intro:
-          'Get Rent Ready uses market data to understand how apartment quality and features relate to rental value.',
+          'Get Rent Ready uses market data to understand how apartment characteristics relate to rental value.',
         layers: [
           {
             label: 'Grade the Market',
             description:
-              'We sampled and scored 900+ Metro City Area rental listings, assigning each apartment a grade from D to A based on four dimensions: Location, Amenities, Quality, and Size.',
+              'I sampled and scored 900+ rental listings, assigning each apartment a grade from D to A across four dimensions: Location, Amenities, Quality, and Size. This creates a consistent framework for comparing properties that would otherwise be difficult to evaluate objectively.',
           },
           {
             label: 'Model Rental Value',
             description:
-              'Using the graded dataset, we applied linear regression to identify how these property characteristics relate to asking rents and estimate market rent for comparable units.',
+              'Using the graded dataset, I applied linear regression to analyze how property characteristics relate to asking rents and estimate market rent for comparable units. Rather than relying on a single neighborhood average, the model considers differences between individual apartments.',
           },
           {
             label: 'Identify the Opportunity',
             description:
-              "A property's current rent and condition can then be compared with similar units in the market to estimate the gap between current performance and its potential.",
+              "A property's current rent and condition can then be compared with similar units in the market. This helps identify the gap between current performance and estimated market potential, and provides context for why comparable apartments may command higher rents.",
           },
           {
             label: 'Support Investment Decisions',
             description:
-              'The analysis helps owners see what is driving higher rents, where improvements may create value, and which investments may offer the strongest potential return.',
+              'The analysis connects market performance back to action. Owners can see which characteristics are associated with higher rents, where improvements may create value, and which investments may offer the strongest potential return.',
           },
         ],
         chainLabel: 'Decision Model',
-        chain: ['900+ listings', 'Grade', 'Model', 'Compare', 'Recommend'],
+        chain: [
+          'Understand the Market',
+          'Identify the Gap',
+          'Evaluate Improvements',
+          'Invest Where It Makes Sense',
+        ],
       },
     ],
   },
@@ -397,6 +418,155 @@ export const CASE_STUDIES: CaseStudy[] = [
           'Real-time validation improves completion and confidence',
           'Data quality is a product problem, not just a backend problem',
           'Seamless integration across systems is critical for adoption',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'azibo-rentals',
+    company: 'Azibo',
+    eyebrow: 'Azibo',
+    title:
+      'Saving Tenants Money and Landlords Time During the Rental Application Process',
+    tagline: 'Rental Application Product',
+    meta: 'Responsive Web App · 2023',
+    role: 'Lead Product Designer',
+    description:
+      'Redesigned the rental application flow to reduce friction for tenants and improve landlord efficiency—cutting application review time by 30% and saving renters $39.95 per application.',
+    metaBelow: true,
+    heroImage: '/images/portfolio/rentals-R0CN0DOq.png',
+    stats: [
+      { label: 'Savings per tenant application', value: '$39.95' },
+      { label: 'Faster landlord application review', value: '30%' },
+      { label: 'Landlords in research panel', value: '50+' },
+      { label: 'Formal applications per unit, before', value: 'Up to 40' },
+    ],
+    images: [],
+    sections: [
+      {
+        type: 'text',
+        heading: 'Overview',
+        paragraphs: [
+          'Azibo set out to give property owners a faster way to review rental applicants, and to let tenants apply for an apartment more easily and affordably — without the stack of separate, paid applications renters were used to filing.',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'The Problem',
+        paragraphs: [
+          "The team had a strategy deck and a development plan, but hadn't yet validated it against how tenants and landlords actually behaved during a search. Renting an apartment is a two-sided problem: landlords need a reliable way to compare applicants, and tenants need a real shot at being considered without paying for every attempt.",
+        ],
+        bullets: [
+          'Some landlords received up to 40 formal applications for a single unit and could only seriously consider 1–3',
+          'Tenants paid $30–50 for each application, with no guarantee of being chosen',
+          'Landlords largely evaluated applicants against the same handful of criteria, applied inconsistently across a fragmented set of tools',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'Key Insight',
+        paragraphs: [
+          "Landlords weren't evaluating every applicant from scratch — they were screening against a consistent set of criteria to narrow the field before anyone paid for a formal, third-party report.",
+        ],
+        bullets: [
+          'A free, self-reported pre-apply step could carry the same signal landlords already used to shortlist candidates',
+          'A formal, paid application only needed to happen once a landlord was genuinely interested',
+          'Landlords cared as much about a fair process for applicants as they did about their own review speed',
+        ],
+      },
+      {
+        type: 'numbered',
+        heading: 'Research & Discovery',
+        intro:
+          "We talked to both sides of the transaction — tenants who had recently signed a lease, and landlords recruited from a 50+ member design panel — to understand each side's process and decision criteria.",
+        items: [
+          {
+            title: 'Tenant Interviews',
+            bullets: [
+              'Conducted 8 phone interviews with tenants who had leased an apartment in the past year',
+              'Covered the application process, security deposits, and renters insurance',
+            ],
+          },
+          {
+            title: 'Landlord & Property Manager Discovery',
+            bullets: [
+              'Conducted 6–8 discovery interviews with landlords and property managers active in a leasing process within the past six months',
+              'Recruited from a 50+ member design panel, plus referrals for tenant-side participants',
+            ],
+          },
+        ],
+      },
+      {
+        type: 'image',
+        heading: 'How Tenants Search Today',
+        intro:
+          "Mapping the apartment seeker's existing path showed two branches: a free pre-apply step, or the fee-based formal application most tenants were used to hitting immediately.",
+        src: '/images/portfolio/rent_tenantflow.png',
+        alt: 'Apartment seeker flow diagram showing a free pre-apply branch and a fee-based application branch',
+      },
+      {
+        type: 'image',
+        heading: 'How Landlords Manage Applicants',
+        intro:
+          'On the landlord side, we mapped the setup flow that lets a property manager choose whether a unit accepts free pre-applications, formal paid applications, or both.',
+        src: '/images/portfolio/rent_landlordflow.png',
+        alt: 'Landlord flow diagram showing dashboard, unit setup, application configuration, and invite steps',
+      },
+      {
+        type: 'numbered',
+        heading: 'Design Process',
+        items: [
+          {
+            title: 'Concept Development',
+            intro:
+              'Partnered with the credit and background-check provider to understand what data was actually available, then built lightweight functioning prototypes for early customer review.',
+          },
+          {
+            title: 'Iterative Testing',
+            intro:
+              'Ran moderated usability testing on Figma prototypes across multiple rounds, adjusting the flow after each round of participant feedback.',
+          },
+          {
+            title: 'Wireframes & Handoff',
+            intro:
+              'Built and reviewed final wireframes with the engineering team to plan and launch the product.',
+          },
+        ],
+      },
+      {
+        type: 'image',
+        heading: 'Self-Reported Application',
+        intro:
+          'The core redesign: a free, self-reported application that walks a tenant through the same information landlords already screen for — contact and financial basics, rental history, then an optional rental resume — before any formal, paid step.',
+        src: '/images/portfolio/rent_tenantscreens.png',
+        alt: 'Three mobile screens of the tenant self-reported application: contact/credit/income, eviction and occupancy history, and rental resume upload',
+      },
+      {
+        type: 'video',
+        heading: 'Product Demo',
+        embedUrl: 'https://www.loom.com/embed/9e83c303e0f34553a132002bedf38305',
+        aspectRatio: '58.00%',
+      },
+      {
+        type: 'text',
+        heading: 'Business Context',
+        paragraphs: [
+          "Alongside this redesign, Azibo's platform saw strong growth over the same period — a useful signal that the broader product direction was working, even though these platform-wide numbers reflect more than this feature alone:",
+        ],
+        bullets: [
+          '+36% average month-over-month growth in platform transaction volume',
+          '+2.2× quarter-over-quarter customer growth, with 7,300+ monthly transacting users',
+          '$1.6M+ in banking cash deposit balances',
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'Key Takeaways',
+        bullets: [
+          'Iterating in small increments — sometimes mid-testing — kept the team aligned and shortened the time from insight to design change',
+          'Landlords cared as much about a fair, complete experience for applicants as they did about their own review speed',
+          'Locking a delivery plan and deadline earlier would have kept the project closer to schedule; we were more disciplined about direction than about pacing',
+          'Handing off visual design to an outside resource after the core UX was set was a new approach for this team, and it introduced delays worth planning around next time',
         ],
       },
     ],

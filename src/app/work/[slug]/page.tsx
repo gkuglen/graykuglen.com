@@ -139,6 +139,9 @@ function SectionNumbered({
                 ))}
               </ul>
             )}
+            {item.outro && (
+              <p className="text-muted-foreground mt-3 text-sm">{item.outro}</p>
+            )}
           </div>
         ))}
       </div>
@@ -339,9 +342,17 @@ function SectionImage({
           {section.intro}
         </p>
       )}
+      {section.paragraphs?.map((p, i) => (
+        <p
+          key={i}
+          className="text-muted-foreground mb-3 text-base leading-relaxed"
+        >
+          {p}
+        </p>
+      ))}
       <div
         className={cn(
-          'bg-accent overflow-hidden rounded-[16px]',
+          'bg-accent mt-6 overflow-hidden rounded-[16px]',
           section.mobile && 'mx-auto max-w-xs sm:max-w-sm',
         )}
       >

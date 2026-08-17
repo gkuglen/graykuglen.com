@@ -13,12 +13,12 @@ type CaseStudy = {
 
 const CASE_STUDIES: CaseStudy[] = [
   {
-    eyebrow: 'Get Real Ready',
+    eyebrow: 'Get Rent Ready',
     title:
-      'Machine Learning for Real Estate: Increasing Cash Flow and Asset Value',
+      'Get Rent Ready: Using Market Data to Increase Rental Income and Property Value',
     description:
-      'Data-driven valuation models increased cash flow by 16% on a single unit while driving a 5–6% lift in asset value. Scaled across a portfolio, this approach delivered a 46% increase in cash flow and reduced expenses by 4–5% since 2023.',
-    image: '/images/portfolio/grr_mobile2.png',
+      'A data-driven approach to identify rent potential, prioritize property improvements, and measure their financial impact — increasing rental income by 24%, reducing operating expenses by 4–5%, and lifting estimated asset value by 5–6% on a real property.',
+    image: '/apps/getrenteady/updated_getrentready.png',
     href: '/work/get-real-ready',
   },
   {
@@ -35,7 +35,7 @@ const CASE_STUDIES: CaseStudy[] = [
     description:
       'Redesigned the rental application flow to reduce friction for tenants and improve landlord efficiency—cutting application review time by 30% and saving renters $39.95 per application.',
     image: '/images/portfolio/rentals-R0CN0DOq.png',
-    href: '#',
+    href: '/work/azibo-rentals',
   },
   {
     eyebrow: 'Kaiser',

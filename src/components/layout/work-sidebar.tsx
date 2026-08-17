@@ -23,6 +23,11 @@ const NAV_GROUPS: NavGroup[] = [
         href: '/work/azibo-insurance',
       },
       {
+        name: 'Azibo',
+        subtitle: 'Rental Application Process',
+        href: '/work/azibo-rentals',
+      },
+      {
         name: 'Kaiser Permanente',
         subtitle: 'Home-Based Healthcare',
         href: '/work/kaiser',
