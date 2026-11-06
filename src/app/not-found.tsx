@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 export default function NotFound() {
   return (
     <section
-      id="metafi-404"
+      id="not-found"
       className="bg-background relative overflow-hidden px-6 lg:px-0"
     >
       <div className="pointer-events-none absolute inset-0">
@@ -34,7 +34,13 @@ export default function NotFound() {
             </Button>
 
             <Button asChild variant="outline" className="w-full sm:w-auto">
-              <Link href="/contact">Contact Support</Link>
+              <a
+                href="https://calendly.com/graykuglen/meet_gray"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get In Touch
+              </a>
             </Button>
           </div>
         </div>

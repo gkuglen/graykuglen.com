@@ -1,32 +1,22 @@
-# Metafi NextJS Template
+# graykuglen.com
 
-Metafi NextJS Template is a premium template built by https://www.shadcnblocks.com
+Portfolio site for Gray Kuglen, a product designer who builds with AI.
 
-- [Demo](https://Metafi-nextjs-template.vercel.app/)
-- [Documentation](https://docs.shadcnblocks.com/templates/getting-started)
+Built with Next.js (App Router, static export) and Tailwind CSS, deployed on Vercel.
 
-## Screenshot
-
-![Metafi NextJS Template screenshot](./public/og-image.jpg)
-
-## Getting Started
+## Develop
 
 ```bash
 npm install
+npm run dev     # http://localhost:3000
+npm run build   # static export to out/
 ```
 
-```bash
-npm run dev
-```
+## Where things live
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `src/app/page.tsx`: homepage
+- `src/components/sections/`: homepage sections
+- `src/lib/case-studies.ts`: all case-study content, rendered by `src/app/work/[slug]/page.tsx`
+- `src/app/services/page.tsx`: services page
 
-## Tech Stack
-
-- Nextjs 15 / App Router
-- Tailwind 4
-- shadcn/ui
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com)
+Originally started from a commercial Shadcnblocks template; see `LICENSE`.

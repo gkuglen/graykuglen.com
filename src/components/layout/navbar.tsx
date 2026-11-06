@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '../ui/theme-toggle';
 
 const HEADER_HEIGHT = 80;
+const CALENDLY_URL = 'https://calendly.com/graykuglen/meet_gray';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -67,7 +68,7 @@ const Navbar = () => {
   }, [isMenuOpen, panelHeight]);
 
   const ITEMS = [
-    { label: 'Experience', href: '/' },
+    { label: 'Work', href: '/' },
     { label: 'Services', href: '/services' },
   ];
 
@@ -96,11 +97,16 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <Link href="/contact" className={cn('hidden sm:block lg:block')}>
-            <Button size="sm" variant="default">
+          <Button
+            asChild
+            size="sm"
+            variant="default"
+            className="hidden sm:inline-flex"
+          >
+            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
               Get In Touch
-            </Button>
-          </Link>
+            </a>
+          </Button>
 
           <div className="lg:block">
             <ThemeToggle />
@@ -189,11 +195,21 @@ const Navbar = () => {
                   </div>
 
                   <div className="mt-4 mb-6 flex flex-col gap-3">
-                    <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-                      <Button className="w-full" size="sm" variant="default">
+                    <Button
+                      asChild
+                      className="w-full"
+                      size="sm"
+                      variant="default"
+                    >
+                      <a
+                        href={CALENDLY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
                         Get In Touch
-                      </Button>
-                    </Link>
+                      </a>
+                    </Button>
                   </div>
                 </nav>
               </div>

@@ -18,18 +18,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://graykuglen.com'),
   title: {
     default: 'Gray Kuglen',
     template: '%s | Gray Kuglen',
   },
   description:
-    'Product designer building data-driven applications for real estate and financial services.',
+    'Product designer, now building with AI. 0-to-1 design for Kaiser, Amazon and Wells Fargo, plus working tools built with AI and data models.',
   keywords: [
     'Product Design',
     'UX',
     'Real Estate',
     'Financial Services',
     'Data-Driven',
+    'AI Prototyping',
     'Gray Kuglen',
   ],
   authors: [{ name: 'Gray Kuglen' }],
@@ -49,14 +51,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Gray Kuglen',
     description:
-      'Product designer building data-driven applications for real estate and financial services.',
+      'Product designer, now building with AI. 0-to-1 design for Kaiser, Amazon and Wells Fargo, plus working tools built with AI and data models.',
     siteName: 'Gray Kuglen',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Gray Kuglen',
+        alt: 'Gray Kuglen: Product designer, now building with AI.',
       },
     ],
   },
@@ -64,7 +66,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Gray Kuglen',
     description:
-      'Product designer building data-driven applications for real estate and financial services.',
+      'Product designer, now building with AI. 0-to-1 design for Kaiser, Amazon and Wells Fargo, plus working tools built with AI and data models.',
     images: ['/og-image.jpg'],
     creator: '@graykuglen',
   },

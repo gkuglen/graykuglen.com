@@ -1,19 +1,17 @@
-import AppsDecisionTools from '@/components/sections/apps-decision-tools';
-import MetafiCta from '@/components/sections/matafi-cta';
-import MetafiFaq from '@/components/sections/metafi-faq';
-import MetafiFeatures from '@/components/sections/metafi-features';
-import MetafiHero from '@/components/sections/metafi-hero';
-import MetafiIntegrations from '@/components/sections/metafi-integrations';
+import Clients from '@/components/sections/clients';
+import ContactCta from '@/components/sections/contact-cta';
+import Hero from '@/components/sections/hero';
+import SelectedWork from '@/components/sections/selected-work';
+import ToolsBuilt from '@/components/sections/tools-built';
 
 export default function Home() {
   return (
     <>
-      <MetafiHero />
-      <MetafiFeatures />
-      <AppsDecisionTools />
-      <MetafiIntegrations />
-      <MetafiFaq />
-      <MetafiCta />
+      <Hero />
+      <SelectedWork />
+      <ToolsBuilt />
+      <Clients />
+      <ContactCta />
     </>
   );
 }

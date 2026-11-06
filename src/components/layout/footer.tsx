@@ -1,12 +1,16 @@
 'use client';
 
-import { Linkedin, Twitter } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const socials = [
-  { Icon: Linkedin, href: 'https://linkedin.com' },
-  { Icon: Twitter, href: 'https://twitter.com' },
+  {
+    Icon: Linkedin,
+    href: 'https://www.linkedin.com/in/graykuglen/',
+    label: 'LinkedIn',
+  },
+  { Icon: Github, href: 'https://github.com/gkuglen', label: 'GitHub' },
 ];
 
 export const Footer = () => {
@@ -44,34 +48,34 @@ export const Footer = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:flex md:items-start md:justify-between md:gap-16">
-            {/* Experience */}
+            {/* Work */}
             <div className="min-w-0">
               <h3 className="text-muted-foreground mb-4 text-sm leading-tight font-medium">
-                Experience
+                Work
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link
-                    href="/#metafi-features"
+                    href="/#work"
                     className="text-primary-foreground/90 hover:text-primary-foreground text-sm font-normal transition-colors"
                   >
-                    Portfolio
+                    Selected work
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/#recent-explorations"
+                    href="/#tools"
                     className="text-primary-foreground/90 hover:text-primary-foreground text-sm font-normal transition-colors"
                   >
-                    Recent Explorations
+                    Tools I’ve built
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/#metafi-faq"
+                    href="/#clients"
                     className="text-primary-foreground/90 hover:text-primary-foreground text-sm font-normal transition-colors"
                   >
-                    FAQ
+                    Earlier work
                   </Link>
                 </li>
               </ul>
@@ -143,15 +147,23 @@ export const Footer = () => {
         {/* bottom bar */}
         <div className="mt-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-muted-foreground text-sm font-normal">
-            © {new Date().getFullYear()} Gray Kuglen. All rights reserved
+            © {new Date().getFullYear()} Gray Kuglen ·{' '}
+            <Link
+              href="/privacy"
+              className="hover:text-primary-foreground transition-colors"
+            >
+              Privacy
+            </Link>
           </p>
 
           <div className="flex items-center gap-4">
-            {socials.map(({ Icon, href }) => (
+            {socials.map(({ Icon, href, label }) => (
               <Link
                 key={href}
                 href={href}
-                aria-label={href}
+                aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary-foreground transition-colors"
               >
                 <Icon className="h-5 w-5" />
