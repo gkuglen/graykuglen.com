@@ -99,18 +99,18 @@ function ServiceCard({ service }: { service: Service }) {
       <div className="grid gap-8 lg:grid-cols-[1fr_1.5fr]">
         {/* Left col */}
         <div>
-          <h2 className="text-2xl leading-snug font-black text-[#141414] sm:text-3xl">
+          <h2 className="text-foreground text-2xl leading-snug font-black sm:text-3xl">
             {service.title}
           </h2>
           <p className="text-muted-foreground mt-4 text-base leading-relaxed">
             {service.description}
           </p>
           {service.pricing && (
-            <p className="mt-4 text-sm font-semibold text-[#141414]">
+            <p className="text-foreground mt-4 text-sm font-semibold">
               Typical: <span className="text-tagline">{service.pricing}</span>
             </p>
           )}
-          <span className="bg-accent mt-4 inline-block rounded-full px-3 py-1 text-xs font-semibold text-[#141414]">
+          <span className="bg-accent text-foreground mt-4 inline-block rounded-full px-3 py-1 text-xs font-semibold">
             {service.duration}
           </span>
         </div>
@@ -118,7 +118,7 @@ function ServiceCard({ service }: { service: Service }) {
         {/* Right col */}
         <div className="space-y-6">
           <div>
-            <p className="mb-3 text-sm font-black tracking-wide text-[#141414] uppercase">
+            <p className="text-foreground mb-3 text-sm font-black tracking-wide uppercase">
               What&apos;s delivered:
             </p>
             <ul className="space-y-2">
@@ -136,7 +136,7 @@ function ServiceCard({ service }: { service: Service }) {
 
           {service.approach && (
             <div>
-              <p className="mb-3 text-sm font-black tracking-wide text-[#141414] uppercase">
+              <p className="text-foreground mb-3 text-sm font-black tracking-wide uppercase">
                 {service.approachLabel}
               </p>
               <ul className="space-y-2">
@@ -155,7 +155,7 @@ function ServiceCard({ service }: { service: Service }) {
 
           {service.bestFor && (
             <div>
-              <p className="mb-3 text-sm font-black tracking-wide text-[#141414] uppercase">
+              <p className="text-foreground mb-3 text-sm font-black tracking-wide uppercase">
                 Best for:
               </p>
               <ul className="space-y-2">
@@ -173,7 +173,9 @@ function ServiceCard({ service }: { service: Service }) {
           )}
 
           <div className="bg-accent rounded-[12px] px-5 py-4">
-            <span className="text-sm font-black text-[#141414]">Outcome: </span>
+            <span className="text-foreground text-sm font-black">
+              Outcome:{' '}
+            </span>
             <span className="text-muted-foreground text-sm">
               {service.outcome}
             </span>
@@ -221,7 +223,7 @@ export default function ServicesPage() {
             <p className="text-tagline mb-4 text-sm font-semibold tracking-widest uppercase">
               Services
             </p>
-            <h1 className="text-4xl leading-tight font-black tracking-tight text-balance text-[#141414] sm:text-5xl md:text-[56px]">
+            <h1 className="text-foreground text-4xl leading-tight font-black tracking-tight text-balance sm:text-5xl md:text-[56px]">
               How I work with teams and products
             </h1>
             <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-base sm:text-lg">
@@ -253,7 +255,7 @@ export default function ServicesPage() {
       </div>
 
       {/* CTA section */}
-      <section className="bg-tagline relative overflow-hidden px-6">
+      <section className="force-light-vars bg-tagline relative overflow-hidden px-6">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(currentColor_1px,transparent_1px)] bg-[size:16px_16px] [color:oklch(1_0_89.88)] opacity-30" />
         <div className="bg-tagline pointer-events-none absolute top-0 left-1/2 h-full w-[500px] -translate-x-1/2" />
         <div className="relative container px-0 py-16 text-center sm:py-20 md:px-6 md:py-28">

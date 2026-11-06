@@ -15,7 +15,10 @@ const ContactCta = () => {
   };
 
   return (
-    <section id="contact" className="bg-tagline relative overflow-hidden px-6">
+    <section
+      id="contact"
+      className="force-light-vars bg-tagline relative overflow-hidden px-6"
+    >
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
         strategy="afterInteractive"

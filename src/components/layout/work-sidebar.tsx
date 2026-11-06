@@ -2,76 +2,48 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 
+import { CASE_STUDIES } from '@/lib/case-studies';
 import { cn } from '@/lib/utils';
 
 type NavItem = { name: string; subtitle: string; href: string };
 type NavGroup = { label: string; items: NavItem[] };
 
+const toItem = (s: (typeof CASE_STUDIES)[number]): NavItem => ({
+  name: s.name,
+  subtitle: s.navLabel,
+  href: `/work/${s.slug}`,
+});
+
 const NAV_GROUPS: NavGroup[] = [
   {
-    label: 'Example Work',
-    items: [
-      {
-        name: 'Get Rent Ready',
-        subtitle: 'Rental Performance & Asset Value',
-        href: '/work/get-real-ready',
-      },
-      {
-        name: 'Azibo',
-        subtitle: 'Property Insurance for Landlords',
-        href: '/work/azibo-insurance',
-      },
-      {
-        name: 'Azibo',
-        subtitle: 'Rental Application Process',
-        href: '/work/azibo-rentals',
-      },
-      {
-        name: 'Kaiser Permanente',
-        subtitle: 'Home-Based Healthcare',
-        href: '/work/kaiser',
-      },
-      { name: 'Amazon', subtitle: 'Virtual Try-On', href: '/work/amazon' },
-      {
-        name: 'YOSS / Adecco',
-        subtitle: 'Freelance Marketplace Research',
-        href: '/work/yoss-adecco',
-      },
-    ],
+    label: 'Selected work',
+    items: CASE_STUDIES.filter((s) => s.group === 'work').map(toItem),
   },
   {
-    label: 'Recent Apps',
-    items: [
-      {
-        name: 'Generations in Color',
-        subtitle: 'Community Public Art',
-        href: '/work/generations-in-color',
-      },
-      {
-        name: 'Property Deal Sheet',
-        subtitle: 'Property Investment Analysis',
-        href: '/work/property-deal-sheet',
-      },
-      {
-        name: 'Get Rent Ready',
-        subtitle: 'Rental Market Analysis',
-        href: '/work/get-real-ready',
-      },
-      {
-        name: 'Property Development',
-        subtitle: 'Development Feasibility',
-        href: '/work/property-development',
-      },
-    ],
+    label: 'Tools I’ve built',
+    items: CASE_STUDIES.filter((s) => s.group === 'built').map(toItem),
   },
 ];
 
 const WorkSidebar = () => {
   const pathname = usePathname();
+  const asideRef = useRef<HTMLElement>(null);
+
+  // On narrow screens the project list scrolls sideways; keep the current one in view.
+  useEffect(() => {
+    const active = asideRef.current?.querySelector<HTMLElement>(
+      '[aria-current="page"]',
+    );
+    active?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [pathname]);
 
   return (
-    <aside className="border-border w-full border-b lg:w-64 lg:shrink-0 lg:border-r lg:border-b-0">
+    <aside
+      ref={asideRef}
+      className="border-border w-full border-b lg:w-64 lg:shrink-0 lg:border-r lg:border-b-0"
+    >
       <div className="p-4 lg:p-6">
         {/* Back link */}
         <Link
@@ -95,18 +67,25 @@ const WorkSidebar = () => {
         </Link>
 
         {NAV_GROUPS.map((group, groupIndex) => (
-          <div key={group.label} className={groupIndex > 0 ? 'mt-6' : ''}>
-            <p className="text-muted-foreground mb-1 hidden text-xs font-semibold tracking-widest uppercase lg:block">
+          <div
+            key={group.label}
+            className={groupIndex > 0 ? 'mt-4 lg:mt-6' : ''}
+          >
+            <p className="text-muted-foreground mb-1 text-sm font-medium">
               {group.label}
             </p>
 
-            <nav className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-x-visible">
+            <nav
+              aria-label={group.label}
+              className="-mx-1 flex gap-1 overflow-x-auto px-1 lg:flex-col lg:overflow-x-visible"
+            >
               {group.items.map((item, itemIndex) => {
                 const isActive = pathname === item.href;
                 return (
                   <Link
                     key={`${group.label}-${itemIndex}`}
                     href={item.href}
+                    aria-current={isActive ? 'page' : undefined}
                     className={cn(
                       'rounded-lg px-3 py-2 text-sm transition-colors lg:flex lg:flex-col',
                       'shrink-0 lg:shrink',
@@ -118,10 +97,9 @@ const WorkSidebar = () => {
                     <span className="text-xs font-semibold tracking-wide uppercase opacity-60">
                       {item.name}
                     </span>
-                    <span className="mt-0.5 hidden leading-snug lg:block">
+                    <span className="mt-0.5 block leading-snug">
                       {item.subtitle}
                     </span>
-                    <span className="block lg:hidden">{item.subtitle}</span>
                   </Link>
                 );
               })}

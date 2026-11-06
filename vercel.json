@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/work/get-real-ready",
+      "destination": "/work/get-rent-ready",
+      "permanent": true
+    }
+  ]
+}

@@ -18,7 +18,7 @@ const WORK: Work[] = [
       'Graded 900+ listings and built a regression model to find each unit’s rent gap and which upgrades pay back.',
     metric: '+24% rental income',
     image: '/apps/getrenteady/updated_getrentready.png',
-    href: '/work/get-real-ready',
+    href: '/work/get-rent-ready',
   },
   {
     company: 'Azibo',
